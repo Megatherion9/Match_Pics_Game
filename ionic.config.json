@@ -1,0 +1,8 @@
+{
+  "name": "MatchPics",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}
