@@ -1,42 +1,43 @@
 
 import { Component } from '@angular/core';
 import _ from 'underscore';
+import { ClassGetter } from '@angular/compiler/src/output/output_ast';
+
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+	selector: 'app-tab1',
+	templateUrl: 'tab1.page.html',
+	styleUrls: ['tab1.page.scss']
 })
-
 
 export class Tab1Page {
 
-  constructor() {}
+	constructor() { }
 
 	animals: string[] = _.shuffle(["lion", "bear", "chicken", "cow", "panda", "wolf", "lion", "bear", "chicken", "cow", "panda", "wolf"]);
-	
+
 	defaultImage: string = "assets/img/card.png";
 	flippedCardsNames: string[] = [];
 	flippedCardsIds: string[] = [];
-	pairedCardsIds: string[] =  [];
+	pairedCardsIds: string[] = [];
 
 	// Function to change images on on click 
 	flipCard(cardId) {
 
-/*		console.log(this.animals);*/
+		/*		console.log(this.animals);*/
 
 		// Verify if card is setted
 		if (!this.flippedCardsIds.includes(cardId) && !this.pairedCardsIds.includes(cardId) && this.flippedCardsNames.length < 2) {
-	
+
 			document.getElementById(cardId).setAttribute('src', "assets/img/" + this.animals[cardId] + ".png");
 
 			this.flippedCardsNames.push(this.animals[cardId]);
-			this.flippedCardsIds.push(cardId);		
+			this.flippedCardsIds.push(cardId);
 
 			// Verify if the first two cards match
 			if (this.flippedCardsNames.length == 2) {
 
-				if	(this.flippedCardsNames[0] == this.flippedCardsNames[1]) {
+				if (this.flippedCardsNames[0] == this.flippedCardsNames[1]) {
 
 					this.pairedCardsIds.push(this.flippedCardsIds[0], this.flippedCardsIds[1]);
 
@@ -45,7 +46,7 @@ export class Tab1Page {
 					this.flippedCardsIds.pop()
 					this.flippedCardsIds.pop()
 
-				}	else {
+				} else {
 
 					setTimeout(() => {
 
@@ -57,25 +58,58 @@ export class Tab1Page {
 						this.flippedCardsIds.pop()
 						this.flippedCardsIds.pop()
 
-					}, 2500);
+					}, 2000);
 				}
 			}
 		}
-	};
+
+		console.log("animals: " + this.animals);
+		console.log("flippedCardsNames: " + this.flippedCardsNames);
+		console.log("flippedCardsIds: " + this.flippedCardsIds);
+		console.log("pairedCardsIds: " + this.pairedCardsIds);
+
+		if (this.pairedCardsIds.length == 12) {
+			console.log("You Win!");
+		}
+
+
+	}
+
+	restartGame() {
+
+		if (this.flippedCardsIds.length == 0) {
+
+			for (var i = 0; i <= 11; i++) {
+				document.getElementById(<string><unknown>i).setAttribute('src', this.defaultImage);
+			};
+
+			this.pairedCardsIds = [];
+			this.flippedCardsNames = [];
+			this.flippedCardsIds = [];
+			this.animals = _.shuffle(["lion", "bear", "chicken", "cow", "panda", "wolf", "lion", "bear", "chicken", "cow", "panda", "wolf"]);
+		}
+	}
 
 }
 
 
 
-// TODO Agregar boton reiniciar esquina superior derecha
-// TODO Agregar a Readme to install nmp install -g underscore
-// TODO Backup in github
-// TODO Add "You Win!" message
-// TODO Add "Start!" message
-// TODO Make the cards desapear once they are paired
-
 
 /**
+
+TODO Add "You Win!" message
+TODO Add flip effect to cards
+TODO Make the cards desapear once they are paired
+TODO Add sound to each card depending on the animal
+TODO Add timer for challenge
+TODO Think about Medals System
+TODO Develop the Medals System
+TODO Work on Dark Mode
+TODO Use a Promise instead of Timer (Maybe)
+
+
+--------------------------------------------------------------------------------------
+
 LOG OF LEARNING
 
 -> Everything has to be inside of an ion-content tag
@@ -87,13 +121,7 @@ LOG OF LEARNING
 
 **/
 
-// import { Component } from '@angular/core';
 
-// @Component({
-//   selector: 'app-tab1',
-//   templateUrl: 'tab1.page.html',
-//   styleUrls: ['tab1.page.scss']
-// })
 // export class Tab1Page {
 
 //   constructor() {}
